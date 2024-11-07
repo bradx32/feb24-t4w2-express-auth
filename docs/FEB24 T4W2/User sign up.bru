@@ -4,8 +4,15 @@ meta {
   seq: 2
 }
 
-get {
+post {
   url: http://localhost:8080/signup
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "username":"alex4",
+    "password":"examplePassword"
+  }
 }

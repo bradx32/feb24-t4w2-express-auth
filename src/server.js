@@ -1,6 +1,6 @@
 const express = require("express");
 const { User } = require("./models/UserModel");
-const { generateJWT } = require("./functions/jwtFunctions");
+const { generateJWT, validateUserAuth } = require("./functions/jwtFunctions");
 
 const app = express();
 
@@ -27,6 +27,7 @@ app.post("/signup", async (request, response) => {
 		});
 	}
 
+
 	// make a user in the DB using the username and password
 	let newUser = await User.create({username: username, password: password});
 
@@ -42,6 +43,12 @@ app.post("/signup", async (request, response) => {
 		}
 	});
 });
+
+app.get("/protectedRoute", validateUserAuth, (request, response) => {
+	response.json({
+		message:"You can see protected content because you're signed in!"
+	});
+})
 
 module.exports = {
 	app
